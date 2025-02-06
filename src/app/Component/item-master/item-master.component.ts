@@ -50,5 +50,6 @@ export class ItemMasterComponent implements OnInit {
 
   onSubmit() {
     console.log(this.productForm.value);
+    this.closeModel();
   }
 }
