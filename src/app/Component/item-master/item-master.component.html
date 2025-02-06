@@ -78,7 +78,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                    <button type="submit" [disabled]="this.productForm.invalid" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                         (click)="closeModel()">Close</button>
                 </div>
