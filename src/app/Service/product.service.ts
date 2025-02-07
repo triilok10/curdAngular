@@ -9,14 +9,14 @@ import { map } from 'rxjs/operators';
 })
 export class ProductService {
 
-  private apiUrl = 'https://localhost:7063/api/ProductAPI/GetList';
+  private apiUrl = 'https://localhost:7063/api/ProductAPI';
 
   constructor(private http: HttpClient) { }
 
   getAllProduct(): Observable<Products[]> {
-    return this.http.get<any>(this.apiUrl).pipe(
+    return this.http.get<any>(this.apiUrl + '/GetList').pipe(
       map(response => {
-        console.log('API Response:', response);  
+        console.log('API Response:', response);
         if (response && response.productItems) {
           return response.productItems;
         } else {
@@ -25,5 +25,10 @@ export class ProductService {
         }
       })
     );
+  }
+
+
+  postProduct(product: Products): Observable<Products> {
+    return this.http.post<Products>(this.apiUrl + '/InsertRecord', product);
   }
 }

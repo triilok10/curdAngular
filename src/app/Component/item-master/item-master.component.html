@@ -1,95 +1,85 @@
 <div class="container-fluid">
     <div class="row p-2 bg-info">
-      <div class="col-6">
-        <h3>Item-Master</h3>
-      </div>
-      <div class="col-6 text-end">
-        <button class="btn btn-warning" (click)="openModel()">Add Items</button>
-      </div>
+        <div class="col-6">
+            <h3>Item-Master</h3>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-warning" (click)="openModel()">Add Items</button>
+        </div>
     </div>
-  
+
     <!-- Create Table -->
     <table *ngIf="productList.length > 0" class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Rating</th>
-          <th>Status</th>
-          <th class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of productList; let i = index;">
-          <!-- Correct property names -->
-          <td>{{ item.productName }}</td> <!-- Corrected -->
-          <td>{{ item.price }}</td> <!-- Corrected -->
-          <td>{{ item.description }}</td> <!-- Corrected -->
-          <td>{{ item.rating }}</td> <!-- Corrected -->
-          <td>{{ item.status ? 'Active' : 'Inactive' }}</td> <!-- Corrected -->
-          <td class="text-center">
-            <button class="btn btn-danger">Delete</button> |
-            <button class="btn btn-primary">Edit</button>
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of productList; let i = index;">
+                <td>{{ item.productName }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.rating }}</td>
+                <td>{{ item.status ? 'Active' : 'Inactive' }}</td>
+                <td class="text-center">
+                    <button class="btn btn-danger">Delete</button> |
+                    <button class="btn btn-primary">Edit</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
-  </div>
-  
-  <!-- Modal -->
-  <div class="modal" id="myModal" #myModal>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" #myModal style="display: none;">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add Items</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModel()"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Items</h4>
+                <button type="button" class="btn-close" (click)="closeModel()"></button>
+            </div>
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="name">Name</label>
+                            <input type="text" formControlName="ProductName" class="form-control" placeholder="Enter Product/Item name">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <label for="price">Price</label>
+                            <input type="number" formControlName="Price" class="form-control" placeholder="Enter item Price">
+                        </div>
+                        <div class="col-6">
+                            <label for="description">Description</label>
+                            <input type="text" formControlName="Description" class="form-control" placeholder="Enter Product/Item description">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <label for="rating">Rating</label>
+                            <input type="number" formControlName="Rating" class="form-control" placeholder="Enter Product/Item rating">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <label for="status">Status</label>
+                            <input type="checkbox" formControlName="Status" class="form-check-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="productForm.invalid" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
+                </div>
+            </form>
         </div>
-  
-        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-          <!-- Modal body -->
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12">
-                <label for="name">Name</label>
-                <input type="text" formControlName="ProductName" name="name" class="form-control"
-                  placeholder="Enter Product/Item name">
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-6">
-                <label for="price">Price</label>
-                <input type="number" formControlName="Price" name="price" class="form-control"
-                  placeholder="Enter item Price">
-              </div>
-              <div class="col-6">
-                <label for="description">Description</label>
-                <input type="text" formControlName="Description" name="description" class="form-control"
-                  placeholder="Enter Product/Item description">
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-12">
-                <label for="rating">Rating</label>
-                <input type="number" formControlName="Rating" name="rating" class="form-control"
-                  placeholder="Enter Product/Item rating">
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-12">
-                <label for="status">Status</label>
-                <input type="checkbox" formControlName="Status" name="status" class="form-check-input">
-              </div>
-            </div>
-          </div>
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="submit" [disabled]="productForm.invalid" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
-  
+</div>
