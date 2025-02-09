@@ -1,26 +1,27 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Products } from '../../Model/products';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../Service/product.service';
+import { Products } from '../../Model/products';
 import { Subscription } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-item-master',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],  
   templateUrl: './item-master.component.html',
   styleUrls: ['./item-master.component.css']
 })
 export class ItemMasterComponent implements OnInit, OnDestroy {
   @ViewChild('myModal') modal: ElementRef | undefined;
-
-  productForm: FormGroup = new FormGroup({});
+  productForm: FormGroup = new FormGroup({}); 
   productList: Products[] = [];
-  private productSubscription: Subscription | undefined;
+  private productSubscription: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private prodServe: ProductService, private cdRef: ChangeDetectorRef) { }
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService
+  ) {}
 
   ngOnInit(): void {
     this.setFormState();
@@ -32,64 +33,84 @@ export class ItemMasterComponent implements OnInit, OnDestroy {
       this.productSubscription.unsubscribe();
     }
   }
-  
-
-  openModel(): void {
-    if (this.modal) {
-      this.modal.nativeElement.style.display = 'block'; 
-    }
-  }
-
-  
-  closeModel(): void {
-    if (this.modal) {
-      this.modal.nativeElement.style.display = 'none';  
-    }
-  }
 
   setFormState(): void {
     this.productForm = this.fb.group({
       ProductItemID: [0],
-      ProductName: ['', [Validators.required]],
-      Price: [0, [Validators.required]],
-      Rating: [0, [Validators.required]],
-      Description: ['', [Validators.required]],
+      ProductName: ['', Validators.required],
+      Price: [0, Validators.required],
+      Rating: [0, Validators.required],
+      Description: ['', Validators.required],
       Status: [false]
     });
   }
 
-  onSubmit(): void {
-    const productData: Products = this.productForm.value;
-
-    console.log('Form Data:', productData);
-    this.prodServe.postProduct(productData).subscribe(
-      (response) => {
-        console.log('Product added successfully', response);
-        this.closeModel();
-        this.getAllProductList();
-      },
-      (error) => {
-        console.error('Error while adding product', error);
-      }
-    );
-  }
-
-
   getAllProductList(): void {
-    this.productSubscription = this.prodServe.getAllProduct().subscribe(
+    this.productSubscription = this.productService.getAllProduct().subscribe(
       (res: Products[]) => {
-        console.log("API Response (Product List):", res);
-        if (res && res.length > 0) {
-          this.productList = res;
-          console.log("Product List Assigned:", this.productList);
-          this.cdRef.detectChanges();
-        } else {
-          console.error('Error: No products found or empty list');
-        }
+        this.productList = res;
       },
       (error) => {
         console.error('Error fetching product list:', error);
       }
     );
+  }
+
+  onSubmit(): void {
+    const productData: Products = this.productForm.value;
+
+    if (productData.productItemID === 0) {
+      this.productService.postProduct(productData).subscribe(
+        (response) => {
+          this.getAllProductList();
+        },
+        (error) => {
+          console.error('Error adding product:', error);
+        }
+      );
+    } else {
+      this.productService.updateProduct(productData.productItemID, productData).subscribe(
+        (response) => {
+          this.getAllProductList();
+        },
+        (error) => {
+          console.error('Error updating product:', error);
+        }
+      );
+    }
+  }
+
+  editItem(productItemID: number): void {
+    this.productService.getProductById(productItemID).subscribe(
+      (product) => {
+        this.productForm.patchValue(product);
+      },
+      (error) => {
+        console.error('Error fetching product:', error);
+      }
+    );
+  }
+
+  deleteItem(productItemID: number): void {
+    this.productService.deleteProduct(productItemID).subscribe(
+      () => {
+        this.getAllProductList();
+      },
+      (error) => {
+        console.error('Error deleting product:', error);
+      }
+    );
+  }
+
+  openModel(): void {
+    if (this.modal) {
+      this.modal.nativeElement.style.display = 'block';
+    }
+  }
+
+  closeModel(): void {
+    if (this.modal) {
+      this.modal.nativeElement.style.display = 'none';
+    }
   }
 }

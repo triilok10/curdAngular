@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Products } from '../Model/products';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Products } from '../Model/products';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +13,22 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getAllProduct(): Observable<Products[]> {
-    return this.http.get<any>(this.apiUrl + '/GetList').pipe(
-      map(response => {
-        console.log('API Response:', response);
-        if (response && response.productItems) {
-          return response.productItems;
-        } else {
-          console.error('Error: productItems not found in the response');
-          throw new Error('productItems not found');
-        }
-      })
-    );
+    return this.http.get<Products[]>(`${this.apiUrl}/GetList`);
   }
 
+  getProductById(productItemID: number): Observable<Products> {
+    return this.http.get<Products>(`${this.apiUrl}/GetRecord?ProductItemID=${productItemID}`);
+  }
 
   postProduct(product: Products): Observable<Products> {
-    return this.http.post<Products>(this.apiUrl + '/InsertRecord', product);
+    return this.http.post<Products>(`${this.apiUrl}/InsertRecord`, product);
+  }
+
+  updateProduct(productItemID: number, product: Products): Observable<Products> {
+    return this.http.put<Products>(`${this.apiUrl}/UpdateRecord/${productItemID}`, product);
+  }
+
+  deleteProduct(productItemID: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/DeleteRecord/${productItemID}`);
   }
 }
