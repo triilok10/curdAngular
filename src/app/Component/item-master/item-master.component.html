@@ -3,7 +3,7 @@
       <div class="col-6">
         <h3>Item-Master</h3>
       </div>
-      <div class="col-6 text-right">
+      <div class="col-6 text-right text-end">
         <button (click)="openModel()" class="btn btn-primary">Add New Product</button>
       </div>
     </div>
@@ -22,19 +22,22 @@
         </thead>
         <tbody>
           <tr *ngFor="let product of productList">
-            <td>{{ product.ProductName }}</td>
-            <td>{{ product.Price }}</td>
-            <td>{{ product.Rating }}</td>
-            <td>{{ product.Description }}</td>
-            <td>{{ product.Status ? 'Active' : 'Inactive' }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.rating }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.status ? 'Active' : 'Inactive' }}</td>
             <td>
-              <button class="btn btn-warning" (click)="editItem(product.ProductItemID)">Edit</button>
-              <button class="btn btn-danger" (click)="deleteItem(product.ProductItemID)">Delete</button>
+              <button class="btn btn-warning" (click)="editItem(product.productItemID)">Edit</button> | 
+              <button class="btn btn-danger" (click)="deleteItem(product.productItemID)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+  <div *ngIf="productList.length === 0">
+    <p>No products available.</p>
   </div>
   
   <!-- Modal for Add/Update Product -->
@@ -63,6 +66,7 @@
           <input formControlName="Status" type="checkbox" />
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
+        <button type="submit" class="btn btn-danger" (click)="closeModel()">Close</button>
       </form>
     </div>
   </div>

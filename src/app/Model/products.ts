@@ -6,4 +6,10 @@ export interface Products {
     description: string;
     status: boolean;
   }
+  export interface ProductResponse{
+    apiStatus:number,
+    message:string,
+    productItems: Products[]; 
+  }
+
   

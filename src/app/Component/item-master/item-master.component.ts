@@ -4,11 +4,12 @@ import { ProductService } from '../../Service/product.service';
 import { Products } from '../../Model/products';
 import { Subscription } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item-master',
   standalone: true,
-  imports: [ReactiveFormsModule],  
+  imports: [ReactiveFormsModule, CommonModule],  
   templateUrl: './item-master.component.html',
   styleUrls: ['./item-master.component.css']
 })
@@ -47,14 +48,18 @@ export class ItemMasterComponent implements OnInit, OnDestroy {
 
   getAllProductList(): void {
     this.productSubscription = this.productService.getAllProduct().subscribe(
-      (res: Products[]) => {
-        this.productList = res;
+      (res: { apiStatus: number, message: string, productItems: Products[] }) => {
+        this.productList = res.productItems;  
+        console.log(this.productList); 
       },
       (error) => {
         console.error('Error fetching product list:', error);
       }
     );
   }
+  
+  
+  
 
   onSubmit(): void {
     const productData: Products = this.productForm.value;
@@ -113,4 +118,5 @@ export class ItemMasterComponent implements OnInit, OnDestroy {
       this.modal.nativeElement.style.display = 'none';
     }
   }
+  
 }
