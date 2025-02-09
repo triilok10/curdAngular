@@ -32,15 +32,14 @@ export class ItemMasterComponent implements OnInit, OnDestroy {
       this.productSubscription.unsubscribe();
     }
   }
-  
+
 
   openModel(): void {
     if (this.modal) {
       this.modal.nativeElement.style.display = 'block'; 
     }
   }
-
-  
+    
   closeModel(): void {
     if (this.modal) {
       this.modal.nativeElement.style.display = 'none';  
