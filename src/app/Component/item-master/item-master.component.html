@@ -41,34 +41,33 @@
   </div>
   
   <!-- Modal for Add/Update Product -->
-  <div #myModal class="modal">
+  <!-- Modal for Add/Update Product -->
+<div #myModal class="modal">
     <div class="modal-content">
       <span (click)="closeModel()" class="close">&times;</span>
       <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="ProductName">Product Name</label>
-          <input formControlName="ProductName" class="form-control" />
+          <label for="productName">Product Name</label>
+          <input formControlName="productName" class="form-control" />
         </div>
         <div class="form-group">
-          <label for="Price">Price</label>
-          <input formControlName="Price" class="form-control" type="number" />
+          <label for="price">Price</label>
+          <input formControlName="price" class="form-control" type="number" />
         </div>
         <div class="form-group">
-          <label for="Rating">Rating</label>
-          <input formControlName="Rating" class="form-control" type="number" />
+          <label for="rating">Rating</label>
+          <input formControlName="rating" class="form-control" type="number" />
         </div>
         <div class="form-group">
-          <label for="Description">Description</label>
-          <textarea formControlName="Description" class="form-control"></textarea>
+          <label for="description">Description</label>
+          <textarea formControlName="description" class="form-control"></textarea>
         </div>
         <div class="form-group">
           <label>Status</label>
-          <input formControlName="Status" type="checkbox" />
+          <input formControlName="status" type="checkbox" />
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
-        <button type="submit" class="btn btn-danger" (click)="closeModel()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
       </form>
     </div>
   </div>
-  
-  
