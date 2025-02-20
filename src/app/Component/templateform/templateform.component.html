@@ -11,28 +11,53 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="objUser.firstName" placeholder="First Name" required>
+                        <input type="text" class="form-control" id="firstName" #fname="ngModel" name="firstName"
+                            [(ngModel)]="objUser.firstName" placeholder="First Name" required>
+                        <div class="text-danger">
+                            @if(fname.touched && fname.errors?.['required']){
+                            <span>Please enter your First Name</span>
+                            }
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="objUser.lastName" placeholder="Last Name" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                            [(ngModel)]="objUser.lastName" placeholder="Last Name" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="phone">Phone</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" [(ngModel)]="objUser.phone" placeholder="Phone Number" required>
+                        <input type="tel" class="form-control" id="phone" #Phone="ngModel" name="phone"
+                            [(ngModel)]="objUser.phone" placeholder="Phone Number" required>
+                        <div class="text-danger">
+                            @if(Phone.touched && Phone.errors?.['required']){
+                            <span>Please enter your Mobile/Phone Number</span>
+                            }
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="objUser.email" placeholder="Email Address" required>
+                        <input type="email" class="form-control" id="email" #Email="ngModel" name="email"
+                            [(ngModel)]="objUser.email" placeholder="Email Address" required>
+                        <div class="text-danger">
+                            @if(Email.touched && Email.errors?.['required']){
+                            <span>Please enter your Email</span>
+                            }
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea class="form-control" id="address" rows="3" name="address" [(ngModel)]="objUser.address" placeholder="Enter your address"></textarea>
+                    <textarea class="form-control" id="address" rows="3" #address="ngModel" name="address"
+                        [(ngModel)]="objUser.address" placeholder="Enter your address"></textarea>
+                    <div class="text-danger">
+                        @if(address.errors?.['required']){
+                        <span>Please enter your Address</span>
+                        }
+                    </div>
                 </div>
 
                 <button type="button" class="btn btn-primary" (click)="OnSubmit()">Submit</button>
