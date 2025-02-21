@@ -6,5 +6,8 @@ export const routes: Routes = [
     { path: "", component: ItemMasterComponent },
     {
         path: "templateForm", component: TemplateformComponent
+    },
+    { 
+        path:"reactiveForm", component:TemplateformComponent
     }
 ];

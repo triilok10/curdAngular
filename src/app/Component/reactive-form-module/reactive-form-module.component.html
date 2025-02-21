@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="row p-2 bg-info">
+        <div class="col-6">
+            <h3>Template Form</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="StudentForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">First Name</label>
+                        <input type="text" formControlName="firstName" class="form-control" id="firstName"  name="firstName"
+                            placeholder="First Name" required>
+                        <div class="text-danger">
+                           
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" formControlName="lastName" class="form-control" id="lastName" name="lastName"
+                             placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone</label>
+                        <input type="tel" formControlName="phone" class="form-control" id="phone"  name="phone"
+                           placeholder="Phone Number" required>
+                        <div class="text-danger">
+                           
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" formControlName="email" class="form-control" id="email"  name="email"
+                           placeholder="Email Address" required>
+                        <div class="text-danger">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" id="address" formControlName="address" rows="3" name="address"
+                        placeholder="Enter your address"></textarea>
+                    <div class="text-danger">
+                        
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" (click)="onSave()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
