@@ -14,7 +14,9 @@
                         <input type="text" formControlName="firstName" class="form-control" id="firstName"  name="firstName"
                             placeholder="First Name" required>
                         <div class="text-danger">
-                           
+                           @if(StudentForm.controls["firstName"].errors?.["required"]){
+                            <span>Please enter your First Name</span>
+                           }
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -30,7 +32,9 @@
                         <input type="tel" formControlName="phone" class="form-control" id="phone"  name="phone"
                            placeholder="Phone Number" required>
                         <div class="text-danger">
-                           
+                            @if(StudentForm.controls["phone"].errors?.["required"]){
+                                <span>Please enter your Phone Number</span>
+                               }
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -38,7 +42,9 @@
                         <input type="email" formControlName="email" class="form-control" id="email"  name="email"
                            placeholder="Email Address" required>
                         <div class="text-danger">
-                            
+                            @if(StudentForm.controls["email"].errors?.["required"] && StudentForm.controls["email"].errors?.["email"]){
+                                <span>Please enter the Email</span>
+                               }
                         </div>
                     </div>
                 </div>
