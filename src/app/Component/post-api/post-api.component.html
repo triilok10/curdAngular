@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row bg-info p-2">
+        <div class="col-6">
+            <h2>Post API</h2>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button type="submit" class="btn btn-success" (click)="onSave()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <form [formGroup]="studentForm">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" name="firstName" placeholder="Enter first name"
+                        formControlName="firstName" required>
+                </div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" placeholder="Enter last name" formControlName="lastName" required>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="form-group">
+                    <label for="mobileNumber">Mobile Number</label>
+                    <input type="tel" class="form-control" name="mobileNumber" placeholder="Enter mobile number" formControlName="mobileNumber" required>
+                </div>
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" name="address" rows="3" placeholder="Enter your address" formControlName="address"
+                        required ></textarea>
+                </div>
+
+                <!-- Gender Dropdown -->
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" formControlName="gender" required>
+                        <option value="null">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-success" (click)="onSave()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

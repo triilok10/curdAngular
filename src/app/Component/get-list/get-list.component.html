@@ -1,5 +1,43 @@
-<div class="row">
-    <div class="col-2">
-        <button class="btn btn-primary" (click)="getAllUser()"> Get Data</button>
+<div class="container-fluid">
+    <div class="row bg-info p-2">
+        <div class="col-6"><h2>Get List</h2></div>
+        <div class="col-6 d-flex justify-content-end">
+            <button class="btn btn-danger" (click)="onRefresh()">Refresh</button>
+        </div>
     </div>
+
+    <div *ngIf="userList.length > 0; else noData">
+        <h2>User List</h2>
+        <!-- Table for displaying user data -->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Post ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Mobile Number</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userList">
+                    <td>{{ user.postApiID }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.mobileNumber }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td class="d-flex justify-content-center"> 
+                        <button type="submit" class="btn btn-danger">Delete Record</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <ng-template #noData>
+        <p>No users found.</p>
+    </ng-template>
 </div>
